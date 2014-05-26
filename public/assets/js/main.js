@@ -7,7 +7,7 @@ function unsetLoadingSpinner() {
 }
 
 function dropCancelHandler(event) {
-  if (event.preventDefault) event.preventDefault();
+  event.preventDefault();
   event.dataTransfer.dropEffect = 'copy';
   return false;
 }
