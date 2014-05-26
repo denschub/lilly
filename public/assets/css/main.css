@@ -1,8 +1,58 @@
+@-webkit-keyframes flash-red {
+  0% {
+    background-color: #660000; }
+
+  33% {
+    background-color: #660000; }
+
+  100% {
+    background-color: #191818; } }
+@keyframes flash-red {
+  0% {
+    background-color: #660000; }
+
+  33% {
+    background-color: #660000; }
+
+  100% {
+    background-color: #191818; } }
+@-webkit-keyframes flash-green {
+  0% {
+    background-color: #004d00; }
+
+  33% {
+    background-color: #004d00; }
+
+  100% {
+    background-color: #191818; } }
+@keyframes flash-green {
+  0% {
+    background-color: #004d00; }
+
+  33% {
+    background-color: #004d00; }
+
+  100% {
+    background-color: #191818; } }
+html {
+  height: 100%; }
+
 body {
   background-color: #191818;
   color: #999999;
   font-size: 16px;
-  min-width: 285px; }
+  min-width: 220px;
+  min-height: 100%; }
+  body.flash-red {
+    -webkit-animation-name: flash-red;
+    -webkit-animation-duration: 2s;
+    animation-name: flash-red;
+    animation-duration: 2s; }
+  body.flash-green {
+    -webkit-animation-name: flash-green;
+    -webkit-animation-duration: 2s;
+    animation-name: flash-green;
+    animation-duration: 2s; }
 
 .pure-menu {
   font-size: 1.3em;

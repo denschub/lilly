@@ -3,11 +3,59 @@ $foreground-color: #999;
 $inactive-color: #242323;
 $active-color: #302F2F;
 
+@mixin flash($name, $color) {
+  @-webkit-keyframes flash-$name {
+    0% {
+      background-color: $color;
+    }
+
+    33% {
+      background-color: $color;
+    }
+
+    100% {
+      background-color: $background-color;
+    }
+  }
+
+  @keyframes flash-$name {
+    0% {
+      background-color: $color;
+    }
+
+    33% {
+      background-color: $color;
+    }
+
+    100% {
+      background-color: $background-color;
+    }
+  }
+}
+
+@mixin animation-include($name) {
+  -webkit-animation-name: $name;
+  -webkit-animation-duration: 2s;
+  animation-name: $name;
+  animation-duration: 2s;
+}
+
+@include flash(red, #660000);
+@include flash(green, #004D00);
+
+html {
+  height: 100%;
+}
+
 body {
   background-color: $background-color;
   color: $foreground-color;
   font-size: 16px;
-  min-width: 285px;
+  min-width: 220px;
+  min-height: 100%;
+
+  &.flash-red { @include animation-include(flash-red); }
+  &.flash-green { @include animation-include(flash-green); }
 }
 
 .pure-menu {
