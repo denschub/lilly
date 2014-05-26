@@ -1,0 +1,53 @@
+body {
+  background-color: #191818;
+  color: #999999;
+  font-size: 16px;
+  min-width: 285px; }
+
+.pure-menu {
+  font-size: 1.3em;
+  text-align: center; }
+  .pure-menu.pure-menu-open, .pure-menu.pure-menu-horizontal li .pure-menu-children,
+  .pure-menu a, .pure-menu .pure-menu-can-have-children > li:after {
+    background-color: #242323;
+    color: #999999; }
+  .pure-menu .pure-menu-heading {
+    text-transform: lowercase;
+    color: #999999; }
+  .pure-menu li a:hover, .pure-menu li a:focus {
+    background-color: #302f2f; }
+
+#droparea {
+  margin-top: 10px; }
+  #droparea .iconrow {
+    max-width: 500px;
+    margin: 0 auto; }
+    #droparea .iconrow .dropzone {
+      position: relative;
+      background-color: #242323;
+      line-height: 151px;
+      margin: 10px;
+      text-align: center; }
+      #droparea .iconrow .dropzone:before {
+        content: "";
+        display: block;
+        padding-top: 100%; }
+      #droparea .iconrow .dropzone:hover {
+        background-color: #302f2f;
+        cursor: pointer; }
+      #droparea .iconrow .dropzone .dropzone-inner {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0; }
+        #droparea .iconrow .dropzone .dropzone-inner i {
+          position: absolute;
+          margin: auto;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          text-align: center;
+          font-size: 4em;
+          height: 1em; }

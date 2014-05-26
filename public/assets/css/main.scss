@@ -1,0 +1,79 @@
+$background-color: #191818;
+$foreground-color: #999;
+$inactive-color: #242323;
+$active-color: #302F2F;
+
+body {
+  background-color: $background-color;
+  color: $foreground-color;
+  font-size: 16px;
+  min-width: 285px;
+}
+
+.pure-menu {
+  font-size: 1.3em;
+  text-align: center;
+
+  &.pure-menu-open, &.pure-menu-horizontal li .pure-menu-children,
+  a, .pure-menu-can-have-children > li:after {
+    background-color: $inactive-color;
+    color: $foreground-color;
+  }
+
+  .pure-menu-heading {
+    text-transform: lowercase;
+    color: $foreground-color;
+  }
+
+  li a:hover, li a:focus {
+    background-color: $active-color;
+  }
+}
+
+#droparea {
+  margin-top: 10px;
+
+  .iconrow {
+    max-width: 500px;
+    margin: 0 auto;
+
+    .dropzone {
+      position: relative;
+      background-color: $inactive-color;
+      line-height: 151px;
+      margin: 10px;
+      text-align: center;
+
+      &:before {
+        content: "";
+        display: block;
+        padding-top: 100%;
+      }
+
+      &:hover {
+        background-color: $active-color;
+        cursor: pointer;
+      }
+
+      .dropzone-inner {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        i {
+          position: absolute;
+          margin: auto;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          text-align: center;
+          font-size: 4em;
+          height: 1em;
+        }
+      }
+    }
+  }
+}
