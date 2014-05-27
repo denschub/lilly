@@ -33,7 +33,12 @@ var Ui = (function() {
 
   Ui.prototype.dropHandler = function(category, event) {
     event.preventDefault();
-    var url = event.dataTransfer.getData("Text");
+    var url;
+    if (event.dataTransfer.types.contains("text/x-moz-text-internal")) {
+      url = event.dataTransfer.getData("text/x-moz-text-internal");
+    } else {
+      url = event.dataTransfer.getData("Text");
+    }
     if(validUrl(url)) {
       app.storage.addUrl(category, url);
     } else {
