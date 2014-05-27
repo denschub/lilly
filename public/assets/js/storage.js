@@ -17,7 +17,7 @@ var Storage = (function() {
     return this._storage.urls[category].indexOf(link);
   };
 
-  Storage.prototype.load = function() {
+  Storage.prototype.load = function(firstLoad) {
     var request = new XMLHttpRequest();
     request.open("GET", "/backend/storage", true);
 
@@ -25,7 +25,7 @@ var Storage = (function() {
       if (request.status >= 200 && request.status < 400){
         try {
           this._storage = JSON.parse(request.responseText);
-          app.ui.flash("green");
+          if(!firstLoad) app.ui.flash("green");
         } catch(e) {
           app.ui.flash("red");
         }
