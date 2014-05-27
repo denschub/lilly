@@ -33,14 +33,11 @@ var Ui = (function() {
 
   Ui.prototype.dropHandler = function(category, event) {
     event.preventDefault();
-    this.startLoadingSpinner();
     var url = event.dataTransfer.getData("Text");
     if(validUrl(url)) {
-      this.flash("green");
-      this.stopLoadingSpinner();
+      app.storage.addUrl(category, url);
     } else {
       this.flash("red");
-      this.stopLoadingSpinner();
     }
   }
 
