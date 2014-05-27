@@ -8,6 +8,11 @@ var Ui = (function() {
       dropzones[i].addEventListener("dragover", this.dropCancelHandler);
       dropzones[i].addEventListener("drop", this.dropHandler.bind(this, dropzones[i].id));
     }
+
+    document.getElementById("refresh").addEventListener(
+      "click",
+      this.refreshClickHandler
+    );
   };
 
   Ui.prototype.startLoadingSpinner = function() {
@@ -44,6 +49,11 @@ var Ui = (function() {
     } else {
       this.flash("red");
     }
+  };
+
+  Ui.prototype.refreshClickHandler = function(event) {
+    event.preventDefault();
+    app.storage.load();
   };
 
   return Ui;
