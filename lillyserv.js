@@ -1,5 +1,4 @@
-var Q = require("q"),
-    http = require("http"),
+var http = require("http"),
     fs = require("fs"),
     argv = require("minimist")(process.argv.slice(2));
 
