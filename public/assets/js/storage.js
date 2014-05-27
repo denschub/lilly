@@ -25,19 +25,16 @@ var Storage = (function() {
         try {
           this._storage = JSON.parse(request.responseText);
         } catch(e) {
-          // TODO better error handling
           app.ui.flash("red");
         }
         app.ui.stopLoadingSpinner();
       } else {
-        // TODO better error handling
         app.ui.flash("red");
         app.ui.stopLoadingSpinner();
       }
     }.bind(this);
 
     request.onerror = function() {
-      // TODO better error handling
       app.ui.flash("red");
     };
 
@@ -53,14 +50,12 @@ var Storage = (function() {
       if (request.status >= 200 && request.status < 400){
         app.ui.stopLoadingSpinner();
       } else {
-        // TODO better error handling
         app.ui.flash("red");
         app.ui.stopLoadingSpinner();
       }
     }.bind(this);
 
     request.onerror = function() {
-      // TODO better error handling
       app.ui.flash("red");
     };
 
