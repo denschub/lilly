@@ -8,9 +8,11 @@ function validUrl(url) {
 }
 
 window.app = {
-  ui: new Ui()
+  ui: new Ui(),
+  storage: new Storage()
 }
 
 document.addEventListener("DOMContentLoaded", function() {
   app.ui.bindEvents();
+  app.storage.load();
 });

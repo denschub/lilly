@@ -27,14 +27,14 @@ var Ui = (function() {
 
   Ui.prototype.dropCancelHandler = function(event) {
     event.preventDefault();
-    event.dataTransfer.dropEffect = 'copy';
+    event.dataTransfer.dropEffect = "copy";
     return false;
   }
 
   Ui.prototype.dropHandler = function(category, event) {
     event.preventDefault();
     this.startLoadingSpinner();
-    var url = event.dataTransfer.getData('Text');
+    var url = event.dataTransfer.getData("Text");
     if(validUrl(url)) {
       this.flash("green");
       this.stopLoadingSpinner();

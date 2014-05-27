@@ -7,14 +7,20 @@ http.createServer(function (req, res) {
   switch(req.url) {
     case "/storage":
       if(req.method === "POST") {
-        Q.nfcall(fs.writeFile, "var/storage.json", "utf-8")
-          .then(function() {
-            res.writeHead(200);
-            res.end();
-          }, function(err) {
-            res.writeHead(500, {"Content-Type": "text/plain"});
-            res.end(err.toString());
-          });
+        var writeStream = fs.createWriteStream("var/storage.json", {
+          flags: "w",
+          encoding: "utf-8"
+        });
+
+        req.on("data", function (data) {
+          writeStream.write(data);
+        });
+
+        req.on("end", function() {
+          writeStream.end();
+          res.writeHead(200, {"Content-Type": "text/plain"});
+          res.end();
+        });
       } else {
         Q.nfcall(fs.readFile, "var/storage.json", "utf-8")
           .then(function(data) {
