@@ -8,7 +8,7 @@ var Ui = (function() {
       dropzones[i].addEventListener("dragover", this.dropCancelHandler);
       dropzones[i].addEventListener("drop", this.dropHandler.bind(this, dropzones[i].id));
     }
-  }
+  };
 
   Ui.prototype.startLoadingSpinner = function() {
     document.getElementById("loader").classList.add("fa-spin");
@@ -23,13 +23,13 @@ var Ui = (function() {
     window.setTimeout(function() {
       document.body.classList.remove("flash-"+color);
     }, 2100);
-  }
+  };
 
   Ui.prototype.dropCancelHandler = function(event) {
     event.preventDefault();
     event.dataTransfer.dropEffect = "copy";
     return false;
-  }
+  };
 
   Ui.prototype.dropHandler = function(category, event) {
     event.preventDefault();
@@ -39,7 +39,7 @@ var Ui = (function() {
     } else {
       this.flash("red");
     }
-  }
+  };
 
   return Ui;
 })();
