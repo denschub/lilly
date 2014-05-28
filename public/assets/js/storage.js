@@ -1,6 +1,7 @@
 var Storage = (function() {
   function Storage() {
     this._storage = {};
+    Events.on("ui:refreshButton:click", this.load);
   }
 
   Storage.prototype.addUrl = function(category, url) {

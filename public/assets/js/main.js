@@ -13,6 +13,6 @@ window.app = {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  app.ui.bindEvents();
   app.storage.load(true);
+  app.ui.renderAddingView();
 });
