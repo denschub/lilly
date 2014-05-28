@@ -40,7 +40,107 @@ var RefreshButton = React.createClass({
   }
 });
 
+var AddManuallyForm = React.createClass({
+  getInitialState: function() {
+    return {
+      visible: false,
+      target: null
+    };
+  },
+
+  componentDidMount: function() {
+    Events.on("ui:addManuallyForm:targetChange", this.handleTargetChange);
+  },
+
+  componentWillUnmount: function() {
+    Events.off("ui:addManuallyForm:targetChange", this.handleTargetChange);
+  },
+
+  handleTargetChange: function(target) {
+    this.setState({
+      visible: !!target,
+      target: target
+    });
+  },
+
+  handleFormSubmit: function(event) {
+    event.preventDefault();
+    app.storage.addUrl(
+      this.state.target,
+      this.refs.url.getDOMNode().value.trim()
+    );
+    this.refs.url.getDOMNode().value = null;
+    this.replaceState(this.getInitialState());
+  },
+
+  handleAbortButton: function(event) {
+    event.preventDefault();
+    this.refs.url.getDOMNode().value = null;
+    this.replaceState(this.getInitialState());
+  },
+
+  render: function() {
+    var formClasses = "pure-form pure-form-stacked pure-g" +
+      (this.state.visible ? "" : " hidden");
+
+    return React.DOM.form(
+      {
+        className: formClasses,
+        onSubmit: this.handleFormSubmit
+      },
+      [
+        React.DOM.div(
+          {
+            className: "pure-u-1"
+          },
+          React.DOM.input(
+            {
+              type: "text",
+              ref: "url",
+              placeholder: "url please...",
+              className: "pure-input-1"
+            }
+          )
+        ),
+        React.DOM.div(
+          {
+            className: "pure-u-1-6"
+          },
+          React.DOM.button(
+            {
+              className: "pure-button icon-button pure-input-1",
+              onClick: this.handleAbortButton
+            },
+            React.DOM.i(
+              {
+                className: "fa fa-trash-o fa-fw"
+              }
+            )
+          )
+        ),
+        React.DOM.div(
+          {
+            className: "pure-u-5-6"
+          },
+          React.DOM.input(
+            {
+              type: "submit",
+              value: "add to '" + this.state.target + "'",
+              className: "pure-button pure-button-primary pure-input-1"
+            }
+          )
+        )
+      ]
+    );
+  }
+});
+
 var Dropzone = React.createClass({
+  handleClick: function(event) {
+    event.preventDefault();
+    Events.trigger("ui:addManuallyForm:targetChange", this.props.category);
+  },
+
   handleDragCancel: function(event) {
     event.preventDefault();
     event.dataTransfer.dropEffect = "copy";
@@ -55,11 +155,7 @@ var Dropzone = React.createClass({
     } else {
       url = event.dataTransfer.getData("Text");
     }
-    if(validUrl(url)) {
-      app.storage.addUrl(category, url);
-    } else {
-      app.ui.flash("red");
-    }
+    app.storage.addUrl(category, url);
   },
 
   render: function() {
@@ -67,6 +163,7 @@ var Dropzone = React.createClass({
       {
         className: "dropzone",
         id: this.props.category,
+        onClick: this.handleClick,
         onDragEnter: this.handleDragCancel,
         onDragOver: this.handleDragCancel,
         onDrop: this.handleDrop.bind(this, this.props.category)
@@ -149,15 +246,20 @@ var Ui = (function() {
 
   Ui.prototype.renderAddingView = function() {
     React.renderComponent(
-      RefreshButton(null),
+      RefreshButton(),
       document.getElementById("refresh-container")
     );
 
     React.renderComponent(
-      Dropzones(null),
+      AddManuallyForm(),
+      document.getElementById("addmanuallyarea")
+    );
+
+    React.renderComponent(
+      Dropzones(),
       document.getElementById("droparea")
     );
-  }
+  };
 
   return Ui;
 })();

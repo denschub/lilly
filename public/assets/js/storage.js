@@ -10,6 +10,11 @@ var Storage = (function() {
       "url": url
     };
 
+    if(!validUrl(url)) {
+      app.ui.flash("red");
+      return false;
+    }
+
     if(!this._storage.urls) this._storage.urls = {};
     if(!this._storage.urls[category]) this._storage.urls[category] = [];
 

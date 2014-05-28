@@ -78,6 +78,24 @@ body {
   }
 }
 
+#addmanuallyarea {
+  .hidden {
+    display: none;
+  }
+
+  form {
+    box-sizing: border-box;
+    max-width: 500px;
+    margin: 20px auto 0;
+    padding: 0 10px;
+
+    button.icon-button {
+      padding: 0.2em 0.6em;
+      font-size: 136%;
+    }
+  }
+}
+
 #droparea {
   margin-top: 10px;
 

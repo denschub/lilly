@@ -10,7 +10,7 @@ function validUrl(url) {
 window.app = {
   ui: new Ui(),
   storage: new Storage()
-}
+};
 
 document.addEventListener("DOMContentLoaded", function() {
   app.storage.load(true);
