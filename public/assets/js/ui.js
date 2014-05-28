@@ -185,24 +185,7 @@ var Dropzone = React.createClass({
 var Dropzones = React.createClass({
   getInitialState: function() {
     return {
-      dropzones: [
-        {
-          category: "tech",
-          icon: "fa-code"
-        },
-        {
-          category: "article",
-          icon: "fa-file-text"
-        },
-        {
-          category: "entertain",
-          icon: "fa-film"
-        },
-        {
-          category: "other",
-          icon: "fa-bookmark"
-        }
-      ]
+      dropzones: window.app.config.dropzones
     };
   },
 

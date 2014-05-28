@@ -8,6 +8,26 @@ function validUrl(url) {
 }
 
 window.app = {
+  config: {
+    dropzones: [
+        {
+        category: "tech",
+        icon: "fa-code"
+      },
+      {
+        category: "article",
+        icon: "fa-file-text"
+      },
+      {
+        category: "entertain",
+        icon: "fa-film"
+      },
+      {
+        category: "other",
+        icon: "fa-bookmark"
+      }
+    ]
+  },
   ui: new Ui(),
   storage: new Storage()
 };
