@@ -39,7 +39,7 @@ I created four categories (tech, article, entertain, other) because that's what 
 Credits and License
 -------------------
 
-My stuff is released under an MIT license, see `LICENSE` for more information. In addition to the code I write myself, I'm using [Underscore.js](http://underscorejs.org), [Backbones event machine](http://backbonejs.org) and [React](http://www.apache.org/licenses/LICENSE-2.0). See the source files for licensing information.
+My stuff is released under an MIT license, see `LICENSE` for more information. In addition to the code I write myself, I'm using [Underscore.js](http://underscorejs.org), [Backbones event machine](http://backbonejs.org) and [React](https://facebook.github.io/react/). See the source files for licensing information.
 
 Ideas
 -----
