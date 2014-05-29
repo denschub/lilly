@@ -1,3 +1,30 @@
+var HeaderNavigation = React.createClass({
+  render: function() {
+    return (
+      React.DOM.div(
+        {
+          className: "pure-menu pure-menu-open pure-menu-horizontal"
+        },
+        [
+          React.DOM.span(
+            {
+              className: "pure-menu-heading"
+            },
+            "lilly"
+          ),
+          React.DOM.ul(
+            null,
+            [
+              RefreshButton(),
+              ReadMenu()
+            ]
+          )
+        ]
+      )
+    );
+  }
+});
+
 var RefreshButton = React.createClass({
   getInitialState: function() {
     return {
@@ -24,17 +51,42 @@ var RefreshButton = React.createClass({
 
   render: function() {
     var loaderClasses = "fa fa-refresh fa-fw" + (this.state.spinning ? " fa-spin" : "");
-    return React.DOM.a(
-      {
-        href: "#refresh",
-        id: "refresh",
-        onClick: this.handleClick
-      },
-      React.DOM.i(
-        {
-          id: "loader",
-          className: loaderClasses
-        }
+    return (
+      React.DOM.li(
+        null,
+        React.DOM.a(
+          {
+            href: "#refresh",
+            id: "refresh",
+            onClick: this.handleClick
+          },
+          React.DOM.i(
+            {
+              id: "loader",
+              className: loaderClasses
+            }
+          )
+        )
+      )
+    )
+  }
+});
+
+var ReadMenu = React.createClass({
+  render: function() {
+    return (
+      React.DOM.li(
+        null,
+        React.DOM.a(
+          {
+            href: "#read"
+          },
+          React.DOM.i(
+            {
+              className: "fa fa-folder-open fa-fw"
+            }
+          )
+        )
       )
     );
   }
@@ -231,8 +283,8 @@ var Ui = (function() {
 
   Ui.prototype.renderAddingView = function() {
     React.renderComponent(
-      RefreshButton(),
-      document.getElementById("refresh-container")
+      HeaderNavigation(),
+      document.getElementById("headernavigation")
     );
 
     React.renderComponent(
