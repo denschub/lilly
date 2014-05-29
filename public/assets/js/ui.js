@@ -401,28 +401,48 @@ var CategoryNavigation = React.createClass({
 });
 
 var LinkListItem = React.createClass({
+  handleDeleteClick: function(event) {
+    event.preventDefault();
+    Events.trigger("storage:remove", this.props.category, this.props.index);
+  },
+
   render: function() {
     return (
       React.DOM.li(
         {
           className: "link-list-item"
         },
-        React.DOM.a(
-          {
-            href: this.props.url,
-            target: "_blank"
-          },
-          [
-            React.DOM.strong(
-              null,
-              this.props.title
-            ),
-            React.DOM.span(
-              null,
-              this.props.url
+        [
+          React.DOM.a(
+            {
+              href: this.props.url,
+              target: "_blank",
+              className: "target"
+            },
+            [
+              React.DOM.strong(
+                null,
+                this.props.title
+              ),
+              React.DOM.span(
+                null,
+                this.props.url
+              )
+            ]
+          ),
+          React.DOM.a(
+            {
+              href: "#delete",
+              className: "delete-button",
+              onClick: this.handleDeleteClick
+            },
+            React.DOM.i(
+              {
+                className: "fa fa-trash-o fa-fw"
+              }
             )
-          ]
-        )
+          )
+        ]
       )
     );
   }
@@ -431,23 +451,33 @@ var LinkListItem = React.createClass({
 var LinkList = React.createClass({
   getInitialState: function() {
     return {
-      links: []
+      links: [],
+      category: null
     };
   },
 
   componentDidMount: function() {
     Events.on("ui:view:changeCategory", this.handleCategoryChange);
+    Events.on("storage:changedLocal", this.handleStorageChange);
   },
 
   componentWillUnmount: function() {
     Events.off("ui:view:changeCategory", this.handleCategoryChange);
+    Events.off("storage:changedLocal", this.handleStorageChange);
   },
 
   handleCategoryChange: function(category) {
     if (!category) return;
 
     this.setState({
-      links: app.storage.getByCategory(category)
+      links: app.storage.getByCategory(category),
+      category: category
+    });
+  },
+
+  handleStorageChange: function() {
+    this.setState({
+      links: app.storage.getByCategory(this.state.category)
     });
   },
 
@@ -455,11 +485,13 @@ var LinkList = React.createClass({
     return (
       React.DOM.ul(
         null,
-        this.state.links.map(function(link) {
+        this.state.links.map(function(link, index) {
+          link.index = index;
+          link.category = this.state.category;
           return (
             LinkListItem(link)
           );
-        })
+        }.bind(this))
       )
     );
   }
@@ -477,10 +509,11 @@ var Ui = (function() {
   };
 
   Ui.prototype.flash = function(color) {
+    document.body.classList.remove("flash-"+color);
     document.body.classList.add("flash-"+color);
     window.setTimeout(function() {
       document.body.classList.remove("flash-"+color);
-    }, 2100);
+    }, 1200);
   };
 
   Ui.prototype.bindViewEvents = function() {

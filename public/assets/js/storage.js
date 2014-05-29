@@ -1,7 +1,9 @@
 var Storage = (function() {
   function Storage() {
     this._storage = {};
-    Events.on("ui:refreshButton:click", this.load);
+    Events.on("ui:refreshButton:click", this.load.bind(this));
+    Events.on("storage:remove", this.remove.bind(this));
+    Events.on("storage:changedLocal", this.save.bind(this));
   }
 
   Storage.prototype.addUrl = function(category, url) {
@@ -29,6 +31,11 @@ var Storage = (function() {
     return this._storage.urls[category];
   }
 
+  Storage.prototype.remove = function(category, index) {
+    this._storage.urls[category].splice(index, 1);
+    Events.trigger("storage:changedLocal");
+  }
+
   Storage.prototype.load = function(firstLoad) {
     var request = new XMLHttpRequest();
     request.open("GET", "/backend/storage", true);
@@ -41,6 +48,7 @@ var Storage = (function() {
             mapHashToView();
           } else {
             app.ui.flash("green");
+            Events.trigger("storage:changedLocal");
           }
         } catch(e) {
           app.ui.flash("red");

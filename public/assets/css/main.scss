@@ -35,9 +35,9 @@ $active-color: #302F2F;
 
 @mixin animation-include($name) {
   -webkit-animation-name: $name;
-  -webkit-animation-duration: 2s;
+  -webkit-animation-duration: 1.5s;
   animation-name: $name;
-  animation-duration: 2s;
+  animation-duration: 1.5s;
 }
 
 @include flash(red, #660000);
@@ -152,6 +152,7 @@ body {
     padding: 0;
 
     li.link-list-item {
+      position: relative;
       list-style-type: none;
       line-height: 1.5em;
 
@@ -159,7 +160,24 @@ body {
         display: block;
         text-decoration: none;
         color: $foreground-color;
-        padding: 10px 10px 5px;
+
+        &.target {
+          margin-right: 40px;
+          padding: 10px 0 5px 10px;
+        }
+
+        &.delete-button {
+          visibility: hidden;
+          position: absolute;
+          top: 0;
+          right: 0;
+          height: 100%;
+          width: 40px;
+          background-color: $inactive-color;
+          font-size: 1.3em;
+          line-height: 66px;
+          text-align: center;
+        }
 
         strong, span {
           display: block;
@@ -177,10 +195,17 @@ body {
         }
 
         &:hover, &:focus {
-          color: $foreground-color;
-          background-color: $active-color;
           outline: 0;
           border: 0;
+        }
+      }
+
+      &:hover {
+        color: $foreground-color;
+        background-color: $active-color;
+
+        .delete-button {
+          visibility: visible;
         }
       }
     }
