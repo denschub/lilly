@@ -422,8 +422,25 @@ var LinkListItem = React.createClass({
   render: function() {
     return (
       React.DOM.li(
-        null,
-        this.props.title + ": " + this.props.url
+        {
+          className: "link-list-item"
+        },
+        React.DOM.a(
+          {
+            href: this.props.url,
+            target: "_blank"
+          },
+          [
+            React.DOM.strong(
+              null,
+              this.props.title
+            ),
+            React.DOM.span(
+              null,
+              this.props.url
+            )
+          ]
+        )
       )
     );
   }
