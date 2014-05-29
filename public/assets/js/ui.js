@@ -68,7 +68,7 @@ var RefreshButton = React.createClass({
           )
         )
       )
-    )
+    );
   }
 });
 
@@ -135,54 +135,56 @@ var AddManuallyForm = React.createClass({
     var formClasses = "pure-form pure-form-stacked pure-g" +
       (this.state.visible ? "" : " hidden");
 
-    return React.DOM.form(
-      {
-        className: formClasses,
-        onSubmit: this.handleFormSubmit
-      },
-      [
-        React.DOM.div(
-          {
-            className: "pure-u-1"
-          },
-          React.DOM.input(
+    return (
+      React.DOM.form(
+        {
+          className: formClasses,
+          onSubmit: this.handleFormSubmit
+        },
+        [
+          React.DOM.div(
             {
-              type: "text",
-              ref: "url",
-              placeholder: "url please...",
-              className: "pure-input-1"
-            }
-          )
-        ),
-        React.DOM.div(
-          {
-            className: "pure-u-1-6"
-          },
-          React.DOM.button(
-            {
-              className: "pure-button icon-button pure-input-1",
-              onClick: this.handleAbortButton
+              className: "pure-u-1"
             },
-            React.DOM.i(
+            React.DOM.input(
               {
-                className: "fa fa-trash-o fa-fw"
+                type: "text",
+                ref: "url",
+                placeholder: "url please...",
+                className: "pure-input-1"
+              }
+            )
+          ),
+          React.DOM.div(
+            {
+              className: "pure-u-1-6"
+            },
+            React.DOM.button(
+              {
+                className: "pure-button icon-button pure-input-1",
+                onClick: this.handleAbortButton
+              },
+              React.DOM.i(
+                {
+                  className: "fa fa-trash-o fa-fw"
+                }
+              )
+            )
+          ),
+          React.DOM.div(
+            {
+              className: "pure-u-5-6"
+            },
+            React.DOM.input(
+              {
+                type: "submit",
+                value: "add to '" + this.state.target + "'",
+                className: "pure-button pure-button-primary pure-input-1"
               }
             )
           )
-        ),
-        React.DOM.div(
-          {
-            className: "pure-u-5-6"
-          },
-          React.DOM.input(
-            {
-              type: "submit",
-              value: "add to '" + this.state.target + "'",
-              className: "pure-button pure-button-primary pure-input-1"
-            }
-          )
-        )
-      ]
+        ]
+      )
     );
   }
 });
@@ -211,23 +213,25 @@ var Dropzone = React.createClass({
   },
 
   render: function() {
-    return React.DOM.div(
-      {
-        className: "dropzone",
-        id: this.props.category,
-        onClick: this.handleClick,
-        onDragEnter: this.handleDragCancel,
-        onDragOver: this.handleDragCancel,
-        onDrop: this.handleDrop.bind(this, this.props.category)
-      },
+    return (
       React.DOM.div(
         {
-          className: "dropzone-inner"
+          className: "dropzone",
+          id: this.props.category,
+          onClick: this.handleClick,
+          onDragEnter: this.handleDragCancel,
+          onDragOver: this.handleDragCancel,
+          onDrop: this.handleDrop.bind(this, this.props.category)
         },
-        React.DOM.i(
+        React.DOM.div(
           {
-            className: "fa " + this.props.icon + " fa-fw"
-          }
+            className: "dropzone-inner"
+          },
+          React.DOM.i(
+            {
+              className: "fa " + this.props.icon + " fa-fw"
+            }
+          )
         )
       )
     );
