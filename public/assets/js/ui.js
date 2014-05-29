@@ -191,12 +191,14 @@ var Dropzones = React.createClass({
 
   render: function() {
     return (
-      React.DOM.div({
+      React.DOM.div(
+        {
           className: "pure-g iconrow"
         },
         this.state.dropzones.map(function(dropzone) {
           return (
-            React.DOM.div({
+            React.DOM.div(
+              {
                 key: dropzone.category,
                 className: "pure-u-1-2"
               },
