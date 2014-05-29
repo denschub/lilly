@@ -418,6 +418,54 @@ var CategoryNavigation = React.createClass({
   }
 });
 
+var LinkListItem = React.createClass({
+  render: function() {
+    return (
+      React.DOM.li(
+        null,
+        this.props.title + ": " + this.props.url
+      )
+    );
+  }
+});
+
+var LinkList = React.createClass({
+  getInitialState: function() {
+    return {
+      links: []
+    };
+  },
+
+  componentDidMount: function() {
+    Events.on("ui:view:changeCategory", this.handleCategoryChange);
+  },
+
+  componentWillUnmount: function() {
+    Events.off("ui:view:changeCategory", this.handleCategoryChange);
+  },
+
+  handleCategoryChange: function(category) {
+    if(!category) return;
+
+    this.setState({
+      links: app.storage.getByCategory(category)
+    });
+  },
+
+  render: function() {
+    return (
+      React.DOM.ul(
+        null,
+        this.state.links.map(function(link) {
+          return (
+            LinkListItem(link)
+          );
+        })
+      )
+    );
+  }
+});
+
 var Ui = (function() {
   function Ui() {}
 
@@ -481,6 +529,11 @@ var Ui = (function() {
     React.renderComponent(
       CategoryNavigation(),
       document.getElementById("categorynavigation")
+    );
+
+    React.renderComponent(
+      LinkList(),
+      document.getElementById("listarea")
     );
   };
 

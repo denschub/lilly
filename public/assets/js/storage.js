@@ -23,6 +23,11 @@ var Storage = (function() {
     return this._storage.urls[category].indexOf(link);
   };
 
+  Storage.prototype.getByCategory = function(category) {
+    if(!category) return [];
+    return this._storage.urls[category];
+  }
+
   Storage.prototype.load = function(firstLoad) {
     var request = new XMLHttpRequest();
     request.open("GET", "/backend/storage", true);
