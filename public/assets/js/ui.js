@@ -15,8 +15,9 @@ var HeaderNavigation = React.createClass({
           React.DOM.ul(
             null,
             [
-              RefreshButton(),
-              ReadMenu()
+              AddButton(),
+              ListButton(),
+              RefreshButton()
             ]
           )
         ]
@@ -72,14 +73,90 @@ var RefreshButton = React.createClass({
   }
 });
 
-var ReadMenu = React.createClass({
+var AddButton = React.createClass({
+  getInitialState: function() {
+    return {
+      selected: false
+    };
+  },
+
+  componentDidMount: function() {
+    Events.on("ui:view:changeView", this.handleViewChange);
+  },
+
+  componentWillUnmount: function() {
+    Events.off("ui:view:changeView", this.handleViewChange);
+  },
+
+  handleViewChange: function(view) {
+    this.setState({
+      selected: (view == "add")
+    });
+  },
+
+  handleClick: function(event) {
+    event.preventDefault();
+    Events.trigger("ui:view:changeView", "add");
+  },
+
   render: function() {
     return (
       React.DOM.li(
-        null,
+        {
+          className: (this.state.selected ? "pure-menu-selected" : "")
+        },
         React.DOM.a(
           {
-            href: "#read"
+            href: "#add",
+            onClick: this.handleClick
+          },
+          React.DOM.i(
+            {
+              className: "fa fa-plus fa-fw"
+            }
+          )
+        )
+      )
+    );
+  }
+});
+
+var ListButton = React.createClass({
+  getInitialState: function() {
+    return {
+      selected: false
+    };
+  },
+
+  componentDidMount: function() {
+    Events.on("ui:view:changeView", this.handleViewChange);
+  },
+
+  componentWillUnmount: function() {
+    Events.off("ui:view:changeView", this.handleViewChange);
+  },
+
+  handleViewChange: function(view) {
+    this.setState({
+      selected: (view == "list")
+    });
+  },
+
+  handleClick: function(event) {
+    event.preventDefault();
+    Events.trigger("ui:view:changeView", "list");
+  },
+
+  render: function() {
+    return (
+      React.DOM.li(
+        {
+          className: (this.state.selected ? "pure-menu-selected" : "")
+        },
+        React.DOM.a(
+          {
+            href: "#list",
+            onClick: this.handleClick
           },
           React.DOM.i(
             {
@@ -285,6 +362,23 @@ var Ui = (function() {
     }, 2100);
   };
 
+  Ui.prototype.bindViewEvents = function() {
+    Events.on("ui:view:changeView", this.handleViewChange.bind(this));
+  };
+
+  Ui.prototype.handleViewChange = function(view) {
+    switch(view) {
+      case "list":
+        this.unmountAddingView();
+        this.renderListView();
+        break;
+      default:
+        this.unmountListView();
+        this.renderAddingView();
+        break;
+    }
+  };
+
   Ui.prototype.renderGeneralComponents = function() {
     React.renderComponent(
       HeaderNavigation(),
@@ -307,6 +401,15 @@ var Ui = (function() {
   Ui.prototype.unmountAddingView = function() {
     React.unmountComponentAtNode(document.getElementById("addmanuallyarea"));
     React.unmountComponentAtNode(document.getElementById("droparea"));
+  };
+
+  Ui.prototype.renderListView = function() {
+
+  };
+
+  Ui.prototype.unmountListView = function() {
+    React.unmountComponentAtNode(document.getElementById("categorynavigation"));
+    React.unmountComponentAtNode(document.getElementById("listarea"));
   };
 
   return Ui;
