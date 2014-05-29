@@ -445,7 +445,7 @@ var LinkList = React.createClass({
   },
 
   handleCategoryChange: function(category) {
-    if(!category) return;
+    if (!category) return;
 
     this.setState({
       links: app.storage.getByCategory(category)

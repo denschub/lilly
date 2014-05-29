@@ -5,26 +5,27 @@ var Storage = (function() {
   }
 
   Storage.prototype.addUrl = function(category, url) {
-    var link = {
-      "title": "TODO",
-      "url": url
-    };
-
-    if(!validUrl(url)) {
+   if (!validUrl(url)) {
       app.ui.flash("red");
       return false;
     }
 
-    if(!this._storage.urls) this._storage.urls = {};
-    if(!this._storage.urls[category]) this._storage.urls[category] = [];
+    if (!this._storage.urls) this._storage.urls = {};
+    if (!this._storage.urls[category]) this._storage.urls[category] = [];
 
-    this._storage.urls[category].push(link);
-    this.save();
-    return this._storage.urls[category].indexOf(link);
+    this.getTitle(url, function(category, url, title) {
+      var link = {
+        "title": title,
+        "url": url
+      };
+
+      this._storage.urls[category].push(link);
+      this.save();
+    }.bind(this, category));
   };
 
   Storage.prototype.getByCategory = function(category) {
-    if(!category) return [];
+    if (!category) return [];
     return this._storage.urls[category];
   }
 
@@ -36,7 +37,7 @@ var Storage = (function() {
       if (request.status >= 200 && request.status < 400){
         try {
           this._storage = JSON.parse(request.responseText);
-          if(!firstLoad) app.ui.flash("green");
+          if (!firstLoad) app.ui.flash("green");
         } catch(e) {
           app.ui.flash("red");
         }
@@ -77,6 +78,27 @@ var Storage = (function() {
 
     app.ui.startLoadingSpinner();
     request.send(JSON.stringify(this._storage, null, "  "));
+  };
+
+  Storage.prototype.getTitle = function(url, callback) {
+    var request = new XMLHttpRequest();
+    request.open("POST", "/backend/gettitle", true);
+
+    request.onload = function() {
+      if (request.status >= 200 && request.status < 400){
+        callback(url, request.responseText);
+        app.ui.stopLoadingSpinner();
+      } else {
+        app.ui.stopLoadingSpinner();
+      }
+    }.bind(this);
+
+    request.onerror = function() {
+      app.ui.stopLoadingSpinner();
+    };
+
+    app.ui.startLoadingSpinner();
+    request.send(url);
   };
 
   return Storage;

@@ -2,6 +2,7 @@
   "name": "lilly",
   "version": "0.0.1",
   "dependencies": {
-    "minimist": ""
+    "minimist": "",
+    "request": ""
   }
 }
