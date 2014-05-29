@@ -34,5 +34,6 @@ window.app = {
 
 document.addEventListener("DOMContentLoaded", function() {
   app.storage.load(true);
+  app.ui.renderGeneralComponents();
   app.ui.renderAddingView();
 });

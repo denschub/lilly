@@ -285,12 +285,14 @@ var Ui = (function() {
     }, 2100);
   };
 
-  Ui.prototype.renderAddingView = function() {
+  Ui.prototype.renderGeneralComponents = function() {
     React.renderComponent(
       HeaderNavigation(),
       document.getElementById("headernavigation")
     );
+  };
 
+  Ui.prototype.renderAddingView = function() {
     React.renderComponent(
       AddManuallyForm(),
       document.getElementById("addmanuallyarea")
