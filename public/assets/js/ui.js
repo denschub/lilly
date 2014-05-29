@@ -304,5 +304,10 @@ var Ui = (function() {
     );
   };
 
+  Ui.prototype.unmountAddingView = function() {
+    React.unmountComponentAtNode(document.getElementById("addmanuallyarea"));
+    React.unmountComponentAtNode(document.getElementById("droparea"));
+  };
+
   return Ui;
 })();
