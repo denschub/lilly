@@ -269,7 +269,7 @@ var AddManuallyForm = React.createClass({
 var Dropzone = React.createClass({
   handleClick: function(event) {
     event.preventDefault();
-    Events.trigger("ui:addManuallyForm:targetChange", this.props.category);
+    Events.trigger("ui:addManuallyForm:targetChange", this.props.name);
   },
 
   handleDragCancel: function(event) {
@@ -294,11 +294,11 @@ var Dropzone = React.createClass({
       React.DOM.div(
         {
           className: "dropzone",
-          id: this.props.category,
+          id: this.props.name,
           onClick: this.handleClick,
           onDragEnter: this.handleDragCancel,
           onDragOver: this.handleDragCancel,
-          onDrop: this.handleDrop.bind(this, this.props.category)
+          onDrop: this.handleDrop.bind(this, this.props.name)
         },
         React.DOM.div(
           {
@@ -318,7 +318,7 @@ var Dropzone = React.createClass({
 var Dropzones = React.createClass({
   getInitialState: function() {
     return {
-      dropzones: window.app.config.dropzones
+      dropzones: window.app.config.categories
     };
   },
 
@@ -332,13 +332,87 @@ var Dropzones = React.createClass({
           return (
             React.DOM.div(
               {
-                key: dropzone.category,
+                key: dropzone.name,
                 className: "pure-u-1-2"
               },
               Dropzone(dropzone)
             )
           );
         })
+      )
+    );
+  }
+});
+
+var CategoryButton = React.createClass({
+  getInitialState: function() {
+    return {
+      selected: false
+    };
+  },
+
+  componentDidMount: function() {
+    Events.on("ui:view:changeCategory", this.handleCategoryChange);
+  },
+
+  componentWillUnmount: function() {
+    Events.off("ui:view:changeCategory", this.handleCategoryChange);
+  },
+
+  handleCategoryChange: function(category) {
+    this.setState({
+      selected: (category == this.props.name)
+    });
+  },
+
+  handleClick: function(event) {
+    event.preventDefault();
+    Events.trigger("ui:view:changeCategory", this.props.name);
+  },
+
+  render: function() {
+    return (
+      React.DOM.li(
+        {
+          className: (this.state.selected ? "pure-menu-selected" : "")
+        },
+        React.DOM.a(
+          {
+            href: "#list/" + this.props.name,
+            onClick: this.handleClick
+          },
+          React.DOM.i(
+            {
+              className: "fa " + this.props.icon + " fa-fw"
+            }
+          )
+        )
+      )
+    );
+  }
+});
+
+var CategoryNavigation = React.createClass({
+  getInitialState: function() {
+    return {
+      categories: window.app.config.categories
+    };
+  },
+
+  render: function() {
+    return (
+       React.DOM.div(
+        {
+          className: "pure-menu pure-menu-open pure-menu-horizontal"
+        },
+        React.DOM.ul(
+          null,
+          this.state.categories.map(function(category) {
+            return (
+              CategoryButton(category)
+            );
+          })
+        )
       )
     );
   }
@@ -404,7 +478,10 @@ var Ui = (function() {
   };
 
   Ui.prototype.renderListView = function() {
-
+    React.renderComponent(
+      CategoryNavigation(),
+      document.getElementById("categorynavigation")
+    );
   };
 
   Ui.prototype.unmountListView = function() {

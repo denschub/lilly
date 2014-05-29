@@ -9,21 +9,21 @@ function validUrl(url) {
 
 window.app = {
   config: {
-    dropzones: [
-        {
-        category: "tech",
+    categories: [
+      {
+        name: "tech",
         icon: "fa-code"
       },
       {
-        category: "article",
+        name: "article",
         icon: "fa-file-text"
       },
       {
-        category: "entertain",
+        name: "entertain",
         icon: "fa-film"
       },
       {
-        category: "other",
+        name: "other",
         icon: "fa-bookmark"
       }
     ]
