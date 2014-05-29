@@ -94,11 +94,6 @@ var AddButton = React.createClass({
     });
   },
 
-  handleClick: function(event) {
-    event.preventDefault();
-    Events.trigger("ui:view:changeView", "add");
-  },
-
   render: function() {
     return (
       React.DOM.li(
@@ -107,8 +102,7 @@ var AddButton = React.createClass({
         },
         React.DOM.a(
           {
-            href: "#add",
-            onClick: this.handleClick
+            href: "#add"
           },
           React.DOM.i(
             {
@@ -142,11 +136,6 @@ var ListButton = React.createClass({
     });
   },
 
-  handleClick: function(event) {
-    event.preventDefault();
-    Events.trigger("ui:view:changeView", "list");
-  },
-
   render: function() {
     return (
       React.DOM.li(
@@ -155,8 +144,7 @@ var ListButton = React.createClass({
         },
         React.DOM.a(
           {
-            href: "#list",
-            onClick: this.handleClick
+            href: "#list"
           },
           React.DOM.i(
             {
@@ -365,11 +353,6 @@ var CategoryButton = React.createClass({
     });
   },
 
-  handleClick: function(event) {
-    event.preventDefault();
-    Events.trigger("ui:view:changeCategory", this.props.name);
-  },
-
   render: function() {
     return (
       React.DOM.li(
@@ -378,8 +361,7 @@ var CategoryButton = React.createClass({
         },
         React.DOM.a(
           {
-            href: "#list/" + this.props.name,
-            onClick: this.handleClick
+            href: "#list/" + this.props.name
           },
           React.DOM.i(
             {

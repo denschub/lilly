@@ -37,7 +37,11 @@ var Storage = (function() {
       if (request.status >= 200 && request.status < 400){
         try {
           this._storage = JSON.parse(request.responseText);
-          if (!firstLoad) app.ui.flash("green");
+          if (firstLoad) {
+            mapHashToView();
+          } else {
+            app.ui.flash("green");
+          }
         } catch(e) {
           app.ui.flash("red");
         }

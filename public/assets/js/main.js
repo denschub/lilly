@@ -32,9 +32,28 @@ window.app = {
   storage: new Storage()
 };
 
+function mapHashToView() {
+  var hash = "", segments = [];
+
+  if (!location.hash) {
+    hash = "add";
+  } else {
+    hash = location.hash.replace("#", "");
+    segments = hash.split('/');
+  }
+
+  if ((segments.length > 1) && (segments[0] == "list")) {
+    Events.trigger("ui:view:changeView", "list");
+    Events.trigger("ui:view:changeCategory", segments[1]);
+  } else {
+    Events.trigger("ui:view:changeView", segments[0]);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", function() {
   app.storage.load(true);
   app.ui.bindViewEvents();
   app.ui.renderGeneralComponents();
-  Events.trigger("ui:view:changeView", "add");
 });
+
+window.addEventListener("hashchange", mapHashToView);
