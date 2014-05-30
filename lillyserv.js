@@ -1,7 +1,8 @@
 var http = require("http"),
     request = require("request"),
     fs = require("fs"),
-    argv = require("minimist")(process.argv.slice(2));
+    argv = require("minimist")(process.argv.slice(2)),
+    entities = require("entities");
 
 http.createServer(function(req, res) {
   switch(req.url) {
@@ -42,7 +43,7 @@ http.createServer(function(req, res) {
           request(url, function (error, response, body) {
             var title = "";
             if (!error) {
-              title = body.match(/<title>([^]*)<\/title>/im)[1].trim();
+              title = entities.decodeHTML(body.match(/<title>([^]*)<\/title>/im)[1].trim());
             }
 
             if (!title) title = "[no title]";
