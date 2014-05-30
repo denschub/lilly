@@ -28,7 +28,8 @@ var Storage = (function() {
 
   Storage.prototype.getByCategory = function(category) {
     if (!category) return [];
-    return this._storage.urls[category];
+    var links = this._storage.urls[category];
+    return links ? link : [];
   }
 
   Storage.prototype.remove = function(category, index) {
