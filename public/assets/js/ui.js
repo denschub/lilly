@@ -269,7 +269,7 @@ var Dropzone = React.createClass({
   handleDrop: function(category, event) {
     event.preventDefault();
     var url;
-    if (event.dataTransfer.types.contains("text/x-moz-text-internal")) {
+    if ((event.dataTransfer.types.contains) && (event.dataTransfer.types.contains("text/x-moz-text-internal"))) {
       url = event.dataTransfer.getData("text/x-moz-text-internal");
     } else {
       url = event.dataTransfer.getData("Text");
