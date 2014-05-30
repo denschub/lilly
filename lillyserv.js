@@ -43,7 +43,12 @@ http.createServer(function(req, res) {
           request(url, function (error, response, body) {
             var title = "";
             if (!error) {
-              title = entities.decodeHTML(body.match(/<title>([^]*)<\/title>/im)[1].trim());
+              title = body.match(/<title>([^]*)<\/title>/im);
+              if (title.length) {
+                title = entities.decodeHTML(title[1]).trim();
+              } else {
+                title = "[no title]";
+              }
             }
 
             if (!title) title = "[no title]";
