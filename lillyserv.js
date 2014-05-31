@@ -2,13 +2,27 @@ var http = require("http"),
     request = require("request"),
     fs = require("fs"),
     argv = require("minimist")(process.argv.slice(2)),
-    entities = require("entities");
+    entities = require("entities")
+
+    storageFile = "var/storage.json";
+
+fs.stat(storageFile, function(err, stat) {
+  if (err == null) return;
+
+  if(err.code == 'ENOENT') {
+    fs.writeFile(storageFile, '{}', function(err) {
+      if (err) throw err;
+    })
+  } else {
+    throw err;
+  }
+});
 
 http.createServer(function(req, res) {
   switch(req.url) {
     case "/storage":
       if (req.method === "POST") {
-        var writeStream = fs.createWriteStream("var/storage.json", {
+        var writeStream = fs.createWriteStream(storageFile, {
           flags: "w",
           encoding: "utf-8",
           autoClose: true
@@ -23,7 +37,7 @@ http.createServer(function(req, res) {
         });
       } else {
         res.writeHead(200, {"Content-Type": "application/json"});
-        var readStream = fs.createReadStream("var/storage.json", {
+        var readStream = fs.createReadStream(storageFile, {
           encoding: "utf-8",
           autoClose: true
         });

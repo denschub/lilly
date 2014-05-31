@@ -12,7 +12,6 @@ var Storage = (function() {
       return false;
     }
 
-    if (!this._storage.urls) this._storage.urls = {};
     if (!this._storage.urls[category]) this._storage.urls[category] = [];
 
     this.getTitle(url, function(category, url, title) {
@@ -45,6 +44,8 @@ var Storage = (function() {
       if (request.status >= 200 && request.status < 400){
         try {
           this._storage = JSON.parse(request.responseText);
+          if (!this._storage.urls) this._storage.urls = {};
+
           if (firstLoad) {
             mapHashToView();
           } else {
