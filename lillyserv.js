@@ -54,7 +54,7 @@ http.createServer(function(req, res) {
           url += data;
         });
         req.on("end", function() {
-          request(url, function (error, response, body) {
+          request({url: url, followAllRedirects: true}, function (error, response, body) {
             var title = "";
             if (!error) {
               title = body.match(/<title>([^]*)<\/title>/im);
